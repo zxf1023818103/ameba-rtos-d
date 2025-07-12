@@ -12,7 +12,6 @@ include $(MAKE_INCLUDE_GEN)
 all:
 	@make -C xip all
 	@make -C sram all
-	@make -C library all
 	@make -C src all
 
 #*****************************************************************************#
@@ -21,7 +20,6 @@ all:
 clean:
 	@make -C xip clean
 	@make -C sram clean
-	@make -C library clean
 	@make -C src clean
 
 -include $(DEPS)
