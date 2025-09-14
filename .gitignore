@@ -25,6 +25,6 @@ build_info.h
 *.ewt
 /**/EWARM-RELEASE/Debug/
 
-project/realtek_amebaD_va0_example/GCC-RELEASE/project_hp/toolchain/asdk/asdk-6.4.1-linux-newlib-build-2773-i686.tar.bz2
+project/realtek_amebaD_va0_example/GCC-RELEASE/project_hp/toolchain/asdk/*
 project/realtek_amebaD_va0_example/GCC-RELEASE/project_lp/asdk/gnu_utility/gnu_script/acut_loader/flash_loader_ram_1.bin
 project/realtek_amebaD_va0_example/GCC-RELEASE/project_lp/asdk/gnu_utility/gnu_script/acut_loader/target_FPGA.axf

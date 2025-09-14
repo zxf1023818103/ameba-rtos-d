@@ -93,11 +93,11 @@ ifeq ($(COMPILEOS),$(LINUX_OS))
 ifeq ($(CONFIG_MATTER_EN), y)
 include $(MATTER_BUILDDIR)/Makefile.toolchain.matter
 else
-ASDK_TOOLCHAIN = $(TOOLCHAINDIR)/linux/asdk-6.4.1/linux/newlib
-ASDK_TOOLCHAIN_R = ../toolchain/linux/asdk-6.4.1/linux/newlib
+ASDK_TOOLCHAIN = $(TOOLCHAINDIR)/linux/asdk-10.3.1/linux/newlib
+ASDK_TOOLCHAIN_R = ../toolchain/linux/asdk-10.3.1/linux/newlib
 TOOLCHAINDIR_OS = linux
-TOOLCHAINNAME = asdk-6.4.1-linux-newlib-build-2773-i686.tar.bz2
-TOOLCHAINURL	= https://github.com/Ameba-AIoT/ameba-toolchain/releases/download/6.4.1/asdk-6.4.1-linux-newlib-build-2773-i686.tar.bz2
+TOOLCHAINNAME = asdk-10.3.1-linux-newlib-build-4354-x86_64_with_small_reent.tar.bz2
+TOOLCHAINURL	= https://github.com/Ameba-AIoT/ameba-toolchain/releases/download/10.3.1_v5/asdk-10.3.1-linux-newlib-build-4354-x86_64_with_small_reent.tar.bz2
 endif
 else ifeq ($(COMPILEOS_CYGWIN),Cygwin)
 ASDK_TOOLCHAIN = $(TOOLCHAINDIR)/cygwin/asdk-6.4.1/cygwin/newlib
@@ -427,7 +427,7 @@ endif
 
 CPPFLAGS = $(GLOBAL_CFLAGS)
 ifneq ($(CONFIG_MATTER_EN), y)
-CPPFLAGS += -std=c++11 -fno-use-cxa-atexit
+CPPFLAGS += -std=gnu++17 -std=gnu17 -fno-use-cxa-atexit
 endif
 
 ifeq (${BUILD_TYPE},MFG)
