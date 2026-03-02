@@ -1,17 +1,17 @@
- /**
-  ******************************************************************************
-  * @file    httpc.h
-  * @author
-  * @version
-  * @brief   This file provides user interface for HTTP/HTTPS client.
-  ******************************************************************************
-  * @attention
-  *
-  * This module is a confidential and proprietary property of RealTek and possession or use of this module requires written permission of RealTek.
-  *
-  * Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
-  ****************************************************************************** 
-  */
+/**
+ ******************************************************************************
+ * @file    httpc.h
+ * @author
+ * @version
+ * @brief   This file provides user interface for HTTP/HTTPS client.
+ ******************************************************************************
+ * @attention
+ *
+ * This module is a confidential and proprietary property of RealTek and possession or use of this module requires written permission of RealTek.
+ *
+ * Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
+ ******************************************************************************
+ */
 #ifndef _HTTPC_H_
 #define _HTTPC_H_
 
@@ -58,7 +58,7 @@ struct http_response {
 	size_t content_len;              /*!< Value of Content-Length header field parsed in HTTP header string */
 	uint8_t *trans_enc;              /*!< Pointer to Transfer-Encoding header field in the parsed HTTP header string */
 	size_t trans_enc_len;            /*!< Transfer-Encoding header field data length */
-    size_t trans_chunk_len;         /*!< Chuncked current transfer length remain, default value: 0xFFFFFFFF*/
+	size_t trans_chunk_len;         /*!< Chuncked current transfer length remain, default value: 0xFFFFFFFF*/
 
 };
 
@@ -131,7 +131,7 @@ void httpc_setup_debug(uint8_t debug);
 
 /**
  * @brief     This function is used to enable ignoring content_len eqauls 0.
- * @param[in] conn: pointer to connection context. 
+ * @param[in] conn: pointer to connection context.
  * @return    None
  */
 void httpc_enable_ignore_content_len(struct httpc_conn *conn);
@@ -142,14 +142,6 @@ void httpc_enable_ignore_content_len(struct httpc_conn *conn);
  * @return    None
  */
 void httpc_set_http_1_0_request_used(uint8_t used);
-
-/**
- * @brief     This function is used to set the maximum handling header size in httpc_response_read_header()
-              The default maximum size of http header is 1024 Bytes
- * @param[in] size: the maximum size of http header
- * @return    None
- */
-void httpc_set_header_size(size_t size);
 
 /**
  * @brief     This function is used to free memory allocated by httpc API, such as httpc_response_get_header_field().
@@ -176,6 +168,15 @@ void httpc_conn_dump_header(struct httpc_conn *conn);
  * @return     -1 : if error occurred
  */
 int httpc_request_write_header_start(struct httpc_conn *conn, char *method, char *resource, char *content_type, size_t content_len);
+
+/**
+ * @brief      This function is used to add an raw HTTP header field to HTTP request.
+ * @param[in]  conn: pointer to connection context
+ * @param[in]  raw_req_header: raw HTTP header field string
+ * @return     0 : if successful
+ * @return     -1 : if error occurred
+ */
+int httpc_request_write_header_raw(struct httpc_conn *conn, char *raw_req_header);
 
 /**
  * @brief      This function is used to add an HTTP header field to HTTP request.

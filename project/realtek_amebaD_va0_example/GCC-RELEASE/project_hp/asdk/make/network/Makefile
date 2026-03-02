@@ -18,6 +18,7 @@ all: CORE_TARGETS
 	@make -C xip all
 	@make -C sram all
 	#make -C rtsp all
+	make -C httpc all
 
 #*****************************************************************************#
 #              GENERATE OBJECT FILE 

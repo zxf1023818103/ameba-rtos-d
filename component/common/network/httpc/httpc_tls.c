@@ -63,7 +63,7 @@ static int _verify_func(void *data, mbedtls_x509_crt *crt, int depth, uint32_t *
 	/* To avoid gcc warnings */
 	( void ) data;
 	( void ) depth;
-	
+
 	char buf[1024];
 	mbedtls_x509_crt_info(buf, sizeof(buf) - 1, "", crt);
 
@@ -94,7 +94,7 @@ static int _random_func(void *p_rng, unsigned char *output, size_t output_len)
 {
 	/* To avoid gcc warnings */
 	( void ) p_rng;
-	
+
 	rtw_get_random_bytes(output, output_len);
 	return 0;
 }
@@ -196,9 +196,9 @@ exit:
 		psa_crypto_init();
 #endif
 		if((ret = mbedtls_ssl_config_defaults(conf,
-				MBEDTLS_SSL_IS_CLIENT,
-				MBEDTLS_SSL_TRANSPORT_STREAM,
-				MBEDTLS_SSL_PRESET_DEFAULT)) != 0) {
+											   MBEDTLS_SSL_IS_CLIENT,
+											   MBEDTLS_SSL_TRANSPORT_STREAM,
+											   MBEDTLS_SSL_PRESET_DEFAULT)) != 0) {
 
 			printf("\n[HTTPC] ERROR: mbedtls_ssl_config_defaults %d\n", ret);
 			ret = -1;
@@ -384,4 +384,20 @@ int httpc_base64_encode(uint8_t *data, size_t data_len, char *base64_buf, size_t
 
 	return ret;
 #endif
+}
+
+int httpc_tls_set_ciphersuites(struct httpc_conn *conn, int *ciphersuites)
+{
+	mbedtls_ssl_context *ssl_ctx = (mbedtls_ssl_context *) conn->tls;
+
+	if (ssl_ctx) {
+		mbedtls_ssl_config *ssl_conf = (mbedtls_ssl_config *) ssl_ctx->conf;
+
+		if (ssl_conf && ciphersuites) {
+			mbedtls_ssl_conf_ciphersuites(ssl_conf, ciphersuites);
+			return 0;
+		}
+	}
+
+	return -1;
 }
