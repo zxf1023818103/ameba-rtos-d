@@ -24,3 +24,7 @@ build_info.h
 *.dep
 *.ewt
 /**/EWARM-RELEASE/Debug/
+
+project/realtek_amebaD_va0_example/GCC-RELEASE/*/asdk/gnu_utility/gnu_script/acut_loader/*.bin
+project/realtek_amebaD_va0_example/GCC-RELEASE/*/asdk/gnu_utility/gnu_script/acut_loader/target_FPGA.axf
+project/realtek_amebaD_va0_example/GCC-RELEASE/project_hp/asdk/lib/application/lib_httpc.a

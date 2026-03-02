@@ -67,7 +67,7 @@ CONFIG_SOC_PS_MODULE=y
 # < CONFIG WIFI 
 #
 CONFIG_WIFI_FW_EN=y
-CONFIG_USER_CTRL_PS=y
+# CONFIG_USER_CTRL_PS is not set
 
 #
 # To set debug msg flag
