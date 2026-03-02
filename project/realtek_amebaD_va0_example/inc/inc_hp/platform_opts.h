@@ -216,7 +216,7 @@
 #define CONFIG_EXAMPLE_HTTP2_CLIENT	0
 
 /* For HTTPC example */
-#define CONFIG_EXAMPLE_HTTPC	0
+#define CONFIG_EXAMPLE_HTTPC	1
 
 /* For HTTPD example */
 #define CONFIG_EXAMPLE_HTTPD	0
