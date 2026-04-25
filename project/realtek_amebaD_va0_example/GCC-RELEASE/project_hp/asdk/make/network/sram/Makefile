@@ -10,7 +10,7 @@ IFLAGS               += -I$(BASEDIR)/component/common/network/libcoap/include
 ifeq ($(CONFIG_MATTER_EN),y)
 LWIPDIR = $(MATTER_DIR)/common/lwip/lwip_v2.1.2
 else
-LWIPDIR = $(BASEDIR)/component/common/network/lwip/lwip_v2.0.2
+LWIPDIR = $(BASEDIR)/component/common/network/lwip/lwip_v2.2.0
 endif
 NETWORK = $(BASEDIR)/component/common/network
 WLANDRV = $(BASEDIR)/component/common/drivers/wlan/realtek

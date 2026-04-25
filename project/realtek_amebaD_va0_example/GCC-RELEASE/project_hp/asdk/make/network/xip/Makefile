@@ -12,7 +12,7 @@ ifeq ($(CONFIG_MATTER_EN), y)
 LWIP_VERSION := lwip_v2.1.2
 LWIPDIR = $(MATTER_DIR)/common/lwip/$(LWIP_VERSION)
 else
-LWIP_VERSION := lwip_v2.0.2
+LWIP_VERSION := lwip_v2.2.0
 LWIPDIR = $(BASEDIR)/component/common/network/lwip/$(LWIP_VERSION)
 endif
 NETWORK = $(BASEDIR)/component/common/network
