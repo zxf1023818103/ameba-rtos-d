@@ -1,0 +1,86 @@
+/**
+ * \file build_info.h
+ *
+ * \brief Build-time configuration info
+ *
+ *  Include this file if you need to depend on the
+ *  configuration options defined in mbedtls_config.h or MBEDTLS_CONFIG_FILE
+ */
+/*
+ *  Copyright The Mbed TLS Contributors
+ *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
+ */
+
+#ifndef MBEDTLS_BUILD_INFO_H
+#define MBEDTLS_BUILD_INFO_H
+
+/*
+ * This set of compile-time defines can be used to determine the version number
+ * of the Mbed TLS library used. Run-time variables for the same can be found in
+ * version.h
+ */
+
+/**
+ * The version number x.y.z is split into three parts.
+ * Major, Minor, Patchlevel
+ */
+#define MBEDTLS_VERSION_MAJOR  3
+#define MBEDTLS_VERSION_MINOR  6
+#define MBEDTLS_VERSION_PATCH  0
+
+/**
+ * The single version number has the following structure:
+ *    MMNNPP00
+ *    Major version | Minor version | Patch version
+ */
+#define MBEDTLS_VERSION_NUMBER         0x03060000
+#define MBEDTLS_VERSION_STRING         "3.6.0"
+#define MBEDTLS_VERSION_STRING_FULL    "mbed TLS 3.6.0"
+
+#if defined(_MSC_VER) && !defined(_CRT_SECURE_NO_DEPRECATE)
+#define _CRT_SECURE_NO_DEPRECATE 1
+#endif
+
+/* Define `inline` on some non-C99-compliant compilers. */
+#if (defined(__ARMCC_VERSION) || defined(_MSC_VER)) && \
+    !defined(inline) && !defined(__cplusplus)
+#define inline __inline
+#endif
+
+#if !defined(MBEDTLS_CONFIG_FILE)
+#include "mbedtls/mbedtls_config.h"
+#else
+#include MBEDTLS_CONFIG_FILE
+#endif
+
+#if defined(MBEDTLS_CONFIG_VERSION) && ( \
+    MBEDTLS_CONFIG_VERSION < 0x03000000 || \
+                             MBEDTLS_CONFIG_VERSION > MBEDTLS_VERSION_NUMBER)
+#error "Invalid config version, defined value of MBEDTLS_CONFIG_VERSION is unsupported"
+#endif
+
+/* Target and application specific configurations
+ *
+ * Allow user to override any previous default.
+ *
+ */
+#if defined(MBEDTLS_USER_CONFIG_FILE)
+#include MBEDTLS_USER_CONFIG_FILE
+#endif
+
+#include "mbedtls/config_adjust_legacy_crypto.h"
+
+#include "mbedtls/config_adjust_x509.h"
+
+#include "mbedtls/config_adjust_ssl.h"
+
+/* Make sure all configuration symbols are set before including check_config.h,
+ * even the ones that are calculated programmatically. */
+#if defined(MBEDTLS_PSA_CRYPTO_CONFIG) /* PSA_WANT_xxx influences MBEDTLS_xxx */ || \
+    defined(MBEDTLS_PSA_CRYPTO_C) /* MBEDTLS_xxx influences PSA_WANT_xxx */
+#include "mbedtls/config_psa.h"
+#endif
+
+#include "mbedtls/check_config.h"
+
+#endif /* MBEDTLS_BUILD_INFO_H */
