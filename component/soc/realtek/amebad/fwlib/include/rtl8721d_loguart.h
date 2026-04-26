@@ -72,6 +72,7 @@ _LONG_CALL_ void LOGUART_SetIMR (u32 SetValue);
 _LONG_CALL_ void LOGUART_WaitBusy(void);
 
 _LONG_CALL_ void LOGUART_SetBaud_FromFlash(void);
+_LONG_CALL_ int LOGUART_SetBaud(u32 BaudRate);
 
 #define DiagPutChar		LOGUART_PutChar
 #define DiagGetChar		LOGUART_GetChar
