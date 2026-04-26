@@ -13,6 +13,7 @@ all:
 	@make -C xip all
 	@make -C sram all
 	@make -C src all
+	@make -C library all
 
 #*****************************************************************************#
 #              CLEAN GENERATED FILES                                          #
@@ -21,5 +22,6 @@ clean:
 	@make -C xip clean
 	@make -C sram clean
 	@make -C src clean
+	@make -C library clean
 
 -include $(DEPS)

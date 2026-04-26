@@ -1,7 +1,7 @@
 
 include $(MAKE_INCLUDE_GEN)
 
-.PHONY: all clean
+.PHONY: all clean lib clean_lib
 
 #*****************************************************************************#
 #                               VARIABLES	                              #
@@ -10,14 +10,14 @@ include $(MAKE_INCLUDE_GEN)
 IFLAGS += #-I$(BASEDIR)/component/common/network/coap/include
 
 #set your source code path here
-CUSTOMER_DIR = $(ROOTDIR)/make/project/library
+CUSTOM_SRC_DIR = $(BASEDIR)/../../src
 
 #*****************************************************************************#
 #                               Source FILE LIST                              #
 #*****************************************************************************#
-#add your source code here
-OBJS +=	\
-		$(CUSTOMER_DIR)/lib_user_test.o\
+CUSTOM_SRCS_C   := $(shell find $(CUSTOM_SRC_DIR) -name "*.c")
+CUSTOM_SRCS_CXX := $(shell find $(CUSTOM_SRC_DIR) -name "*.cpp")
+OBJS += $(CUSTOM_SRCS_C:.c=.o) $(CUSTOM_SRCS_CXX:.cpp=.o)
 
 #*****************************************************************************#
 #                               Dependency	                              #
@@ -28,16 +28,20 @@ OBJS +=	\
 #                        RULES TO GENERATE TARGETS                            #
 #*****************************************************************************#
 
+clean_lib:
+	$(REMOVE) $(ROOTDIR)/lib/application/lib_user.a
+
 # Define the Rules to build the core targets
-all: CORE_TARGETS COPY_RAM_OBJS
+lib: CORE_TARGETS
 	$(AR) rvs lib_user.a $(OBJS) $(OBJS_SRAM)
-	$(FROMELF) --strip-debug lib_user.a
 	$(MOVE) -f lib_user.a $(ROOTDIR)/lib/application
+
+all: lib clean
 
 #*****************************************************************************#
 #              GENERATE OBJECT FILE 
 #*****************************************************************************#
-CORE_TARGETS:	$(OBJS)
+CORE_TARGETS: clean_lib $(OBJS)
 
 #*****************************************************************************#
 #                        RULES TO CLEAN TARGETS                               #
@@ -45,5 +49,13 @@ CORE_TARGETS:	$(OBJS)
 clean: CLEAN_OBJS 
 	$(REMOVE) *.o
 	$(REMOVE) *.i
+	$(REMOVE) *.ii
 	$(REMOVE) *.s
+	$(REMOVE) *.su
 	$(REMOVE) *.d
+	$(REMOVE) $(CUSTOM_SRC_DIR)/*.o
+	$(REMOVE) $(CUSTOM_SRC_DIR)/*.i
+	$(REMOVE) $(CUSTOM_SRC_DIR)/*.ii
+	$(REMOVE) $(CUSTOM_SRC_DIR)/*.s
+	$(REMOVE) $(CUSTOM_SRC_DIR)/*.su
+	$(REMOVE) $(CUSTOM_SRC_DIR)/*.d

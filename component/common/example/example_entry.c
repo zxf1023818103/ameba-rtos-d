@@ -518,7 +518,8 @@ void pre_example_entry(void)
 	if(read_data.enable == 1)
 #endif
 	{
-		example_wlan_fast_connect();
+		extern void app_pre_example(void);
+		app_pre_example();
 	}
 #endif
 #if defined(CONFIG_JD_SMART) && CONFIG_JD_SMART

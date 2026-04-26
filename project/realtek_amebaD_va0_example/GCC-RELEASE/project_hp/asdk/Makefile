@@ -211,6 +211,7 @@ endif
 ifeq ($(CONFIG_MATTER_EN), y)
 LINK_APP_LIB += -Wl,--start-group $(ROOTDIR)/lib/application/lib_main.a $(ROOTDIR)/lib/application/libCHIP.a -Wl,--end-group
 endif
+LINK_APP_LIB += $(ROOTDIR)/lib/application/lib_user.a
 
 rom: build_target_folder copy_ld_rom check_toolchain build_info.h make_subdirs_rom package_prebuilt_rom_objs rom_linker 
 rom_ns: build_target_folder copy_ld_rom_ns check_toolchain build_info.h make_subdirs_rom_ns package_prebuilt_rom_objs rom_linker_ns 

@@ -1,5 +1,6 @@
 *.d
 *.i
+*.ii
 *.o
 *.su
 *.s
@@ -28,3 +29,4 @@ build_info.h
 project/realtek_amebaD_va0_example/GCC-RELEASE/project_hp/toolchain/asdk/*
 project/realtek_amebaD_va0_example/GCC-RELEASE/project_lp/asdk/gnu_utility/gnu_script/acut_loader/flash_loader_ram_1.bin
 project/realtek_amebaD_va0_example/GCC-RELEASE/project_lp/asdk/gnu_utility/gnu_script/acut_loader/target_FPGA.axf
+project/realtek_amebaD_va0_example/GCC-RELEASE/project_hp/asdk/lib/application/lib_user.a
