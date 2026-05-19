@@ -4,8 +4,8 @@
 #include "lfs.h"
 
 #ifndef CONFIG_USE_FLASHCFG
-#define LFS_FLASH_BASE_ADDR 0x200000
-#define LFS_DEVICE_SIZE 0x100000
+#define LFS_FLASH_BASE_ADDR 0x300000
+#define LFS_DEVICE_SIZE 0x0FA000
 #endif
 
 extern struct lfs_config g_lfs_cfg;
