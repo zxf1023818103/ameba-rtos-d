@@ -28,12 +28,14 @@ struct lfs_config g_nand_flash_lfs_cfg = {
 	.unlock = lfs_nand_flash_diskio_unlock,
 #endif
 
+	/* NAND-specific physical params (page=2K, block=128K); only software
+	 * parameters (block_cycles) aligned with NOR set */
 	.read_size = 2048,
 	.prog_size = 2048,
 	.block_size = 2048 * 64,
 	.lookahead_size = 8,
 	.cache_size = 2048,
-	.block_cycles = 100,
+	.block_cycles = 500,
 };
 
 int lfs_nand_flash_read(const struct lfs_config *c, lfs_block_t block, lfs_off_t off, void *buffer, lfs_size_t size)

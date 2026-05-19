@@ -14,15 +14,16 @@ struct lfs_config g_lfs_cfg = {
 	.unlock = lfs_diskio_unlock,
 #endif
 
-	.read_size = 1,
-	.prog_size = 1,
+	/* unified across platforms — see at-project root CLAUDE.md */
+	.read_size = 256,
+	.prog_size = 256,
 	.block_size = 4096,
 #ifndef CONFIG_USE_FLASHCFG
 	.block_count = LFS_DEVICE_SIZE / 4096,
-	.lookahead_size = (LFS_DEVICE_SIZE / 4096 / 8) * 8,
 #endif
-	.cache_size = 256,
-	.block_cycles = 100,
+	.lookahead_size = 256,
+	.cache_size = 512,
+	.block_cycles = 500,
 };
 
 
