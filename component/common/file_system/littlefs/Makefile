@@ -23,7 +23,7 @@ OBJS +=
 #                        RULES TO GENERATE TARGETS                            #
 #*****************************************************************************#
 all: CORE_TARGETS COPY_RAM_OBJS
-	make -C r2.50 all
+	make -C r2.80 all
 #*****************************************************************************#
 #              GENERATE OBJECT FILE 
 #*****************************************************************************#
@@ -37,6 +37,6 @@ clean:
 	$(REMOVE) *.i
 	$(REMOVE) *.s
 	$(REMOVE) *.d
-	make -C r2.50 clean
+	make -C r2.80 clean
 
 -include $(DEPS)

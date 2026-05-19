@@ -13,8 +13,8 @@ DIR = $(BASEDIR)/component/common/file_system/littlefs
 #                               Source FILE LIST                              #
 #*****************************************************************************#
 CSRC += $(DIR)/littlefs_adapter.c	\
-	$(DIR)/r2.50/lfs.c	\
-	$(DIR)/r2.50/lfs_util.c
+	$(DIR)/r2.80/lfs.c	\
+	$(DIR)/r2.80/lfs_util.c
 
 ifeq ($(CONFIG_SPI_NAND_EN),y)
 CSRC += $(DIR)/spi_nand_adapter/littlefs_nand_adapter.c	\

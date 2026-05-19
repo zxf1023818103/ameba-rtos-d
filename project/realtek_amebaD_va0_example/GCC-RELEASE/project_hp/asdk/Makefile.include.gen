@@ -301,7 +301,7 @@ IFLAGS               += -I$(BASEDIR)/component/common/ui/emwin/emWinLibrary/incl
 			
 #littlefs
 IFLAGS               += -I$(BASEDIR)/component/common/file_system/littlefs \
-			-I$(BASEDIR)/component/common/file_system/littlefs/r2.50 \
+			-I$(BASEDIR)/component/common/file_system/littlefs/r2.80 \
 			-I$(BASEDIR)/component/common/file_system/littlefs/spi_nand_adapter \
 
 #bluetooth
