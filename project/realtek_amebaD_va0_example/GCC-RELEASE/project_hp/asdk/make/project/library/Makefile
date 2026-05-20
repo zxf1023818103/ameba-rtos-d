@@ -3,59 +3,34 @@ include $(MAKE_INCLUDE_GEN)
 
 .PHONY: all clean lib clean_lib
 
-#*****************************************************************************#
-#                               VARIABLES	                              #
-#*****************************************************************************#
-#add your include path here
-IFLAGS += #-I$(BASEDIR)/component/common/network/coap/include
-
-#set your source code path here
-CUSTOM_SRC_DIR = $(BASEDIR)/../../src
-
-#*****************************************************************************#
-#                               Source FILE LIST                              #
-#*****************************************************************************#
-CUSTOM_SRCS_C   := $(shell find $(CUSTOM_SRC_DIR) -name "*.c")
-CUSTOM_SRCS_CXX := $(shell find $(CUSTOM_SRC_DIR) -name "*.cpp")
-OBJS += $(CUSTOM_SRCS_C:.c=.o) $(CUSTOM_SRCS_CXX:.cpp=.o)
-
-#*****************************************************************************#
-#                               Dependency	                              #
-#*****************************************************************************#
--include $(OBJS:.o=.d)
-
-#*****************************************************************************#
-#                        RULES TO GENERATE TARGETS                            #
-#*****************************************************************************#
+CUSTOM_SRC_DIR := $(BASEDIR)/../../src
+USER_BUILD_DIR := $(BASEDIR)/../../build/amebad_user
+USER_CACHE     := $(USER_BUILD_DIR)/init-cache.cmake
+USER_LIB       := $(USER_BUILD_DIR)/libat_user.a
 
 clean_lib:
 	$(REMOVE) $(ROOTDIR)/lib/application/lib_user.a
+	rm -rf $(USER_BUILD_DIR)
 
-# Define the Rules to build the core targets
-lib: CORE_TARGETS
-	$(AR) rvs lib_user.a $(OBJS) $(OBJS_SRAM)
-	$(MOVE) -f lib_user.a $(ROOTDIR)/lib/application
+# Emit a CMake init-cache that pins the cross toolchain and forwards the SDK's
+# C/C++ flag sets (which already contain -I/-D from $(IFLAGS)).
+$(USER_CACHE): $(MAKEFILE_LIST)
+	mkdir -p $(USER_BUILD_DIR)
+	@echo 'set(CMAKE_SYSTEM_NAME Generic CACHE STRING "")'                                            >  $@
+	@echo 'set(CMAKE_SYSTEM_PROCESSOR arm CACHE STRING "")'                                           >> $@
+	@echo 'set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY CACHE STRING "")'                         >> $@
+	@echo 'set(CMAKE_C_COMPILER "$(CC)" CACHE FILEPATH "")'                                           >> $@
+	@echo 'set(CMAKE_CXX_COMPILER "$(CC)" CACHE FILEPATH "")'                                         >> $@
+	@echo 'set(CMAKE_AR "$(AR)" CACHE FILEPATH "")'                                                   >> $@
+	@echo 'set(CMAKE_C_FLAGS_INIT "$(GLOBAL_CFLAGS)" CACHE STRING "")'                                >> $@
+	@echo 'set(CMAKE_CXX_FLAGS_INIT "$(CPPFLAGS)" CACHE STRING "")'                                   >> $@
 
-all: lib clean
+lib: $(USER_CACHE)
+	cmake -S $(CUSTOM_SRC_DIR) -B $(USER_BUILD_DIR) -G "Unix Makefiles" -C $(USER_CACHE)
+	cmake --build $(USER_BUILD_DIR) --parallel
+	cp $(USER_LIB) $(ROOTDIR)/lib/application/lib_user.a
 
-#*****************************************************************************#
-#              GENERATE OBJECT FILE 
-#*****************************************************************************#
-CORE_TARGETS: clean_lib $(OBJS)
+all: lib
 
-#*****************************************************************************#
-#                        RULES TO CLEAN TARGETS                               #
-#*****************************************************************************#
-clean: CLEAN_OBJS 
-	$(REMOVE) *.o
-	$(REMOVE) *.i
-	$(REMOVE) *.ii
-	$(REMOVE) *.s
-	$(REMOVE) *.su
-	$(REMOVE) *.d
-	$(REMOVE) $(CUSTOM_SRC_DIR)/*.o
-	$(REMOVE) $(CUSTOM_SRC_DIR)/*.i
-	$(REMOVE) $(CUSTOM_SRC_DIR)/*.ii
-	$(REMOVE) $(CUSTOM_SRC_DIR)/*.s
-	$(REMOVE) $(CUSTOM_SRC_DIR)/*.su
-	$(REMOVE) $(CUSTOM_SRC_DIR)/*.d
+clean:
+	rm -rf $(USER_BUILD_DIR)
