@@ -427,7 +427,7 @@ endif
 
 CPPFLAGS = $(GLOBAL_CFLAGS)
 ifneq ($(CONFIG_MATTER_EN), y)
-CPPFLAGS += -std=gnu++17 -std=gnu17 -fno-use-cxa-atexit
+CPPFLAGS += -std=gnu++17 -fno-use-cxa-atexit
 endif
 
 ifeq (${BUILD_TYPE},MFG)
