@@ -7,16 +7,12 @@ CUSTOM_SRC_DIR := $(BASEDIR)/../../src
 USER_BUILD_DIR := $(BASEDIR)/../../build/amebad_user
 USER_CACHE     := $(USER_BUILD_DIR)/init-cache.cmake
 
-# User libraries get staged into lib/application/user/ instead of being a
-# single hard-coded lib_user.a. Whatever lib*.a CMake produces from
-# $(CUSTOM_SRC_DIR) lands here, and asdk/Makefile wildcard-globs them
-# into LINK_APP_LIB (wrapped in --start-group). This lets the user CMake
-# project add new add_library() targets without having to touch the
-# SDK Makefiles.
-USER_LIB_DIR   := $(ROOTDIR)/lib/application/user
+# No staging copy: CMake writes the authoritative link list to
+# $(USER_BUILD_DIR)/user_link.list (see src/CMakeLists.txt). asdk/Makefile
+# cats that file at link-recipe time. Whatever STATIC_LIBRARY targets the
+# user CMake project declares end up in the list automatically.
 
 clean_lib:
-	rm -rf $(USER_LIB_DIR)
 	rm -rf $(USER_BUILD_DIR)
 
 # Emit a CMake init-cache that pins the cross toolchain and forwards the SDK's
@@ -35,9 +31,6 @@ $(USER_CACHE): $(MAKEFILE_LIST)
 lib: $(USER_CACHE)
 	cmake -S $(CUSTOM_SRC_DIR) -B $(USER_BUILD_DIR) -G "Unix Makefiles" -C $(USER_CACHE)
 	cmake --build $(USER_BUILD_DIR) --parallel
-	mkdir -p $(USER_LIB_DIR)
-	rm -f $(USER_LIB_DIR)/*.a
-	find $(USER_BUILD_DIR) -name 'lib*.a' -exec cp {} $(USER_LIB_DIR)/ \;
 
 all: lib
 

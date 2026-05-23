@@ -211,18 +211,19 @@ endif
 ifeq ($(CONFIG_MATTER_EN), y)
 LINK_APP_LIB += -Wl,--start-group $(ROOTDIR)/lib/application/lib_main.a $(ROOTDIR)/lib/application/libCHIP.a -Wl,--end-group
 endif
-# All user libraries staged by make/project/library/Makefile into
-# lib/application/user/. Multiple add_library() targets in the user
-# CMake project are picked up automatically — no need to add entries
-# here when new .a files are introduced. --start-group lets the libs
-# have mutual references in any order.
+# User libraries: src/CMakeLists.txt walks at_user's transitive deps and
+# writes the full STATIC_LIBRARY set to user_link.list (one absolute path
+# per line). Adding a new add_library() target + target_link_libraries()
+# in src/CMakeLists.txt is picked up automatically — no SDK Makefile
+# edits required. --start-group lets the libs cross-reference in any
+# order.
 #
-# NOTE: $(wildcard ...) is left UNexpanded here on purpose. LINK_APP_LIB is
-# defined with recursive semantics (line 80 above uses `=`), so this
-# line is re-evaluated at link-recipe time, after make_subdirs has run
-# make/project/library/ and staged the .a files. A `:=` capture into a
-# helper variable would evaluate at parse time and miss them all.
-LINK_APP_LIB += -Wl,--start-group $(wildcard $(ROOTDIR)/lib/application/user/lib*.a) -Wl,--end-group
+# NOTE: $(shell ...) is left UNexpanded at parse time. LINK_APP_LIB has
+# recursive semantics (line 80 above uses `=`), so the cat re-runs at
+# link-recipe time, after make_subdirs has driven make/project/library/
+# (which runs cmake → file(GENERATE) → user_link.list). An empty/missing
+# list yields an empty group, which ld accepts as a no-op.
+LINK_APP_LIB += -Wl,--start-group $(shell cat $(BASEDIR)/../../build/amebad_user/user_link.list 2>/dev/null) -Wl,--end-group
 
 rom: build_target_folder copy_ld_rom check_toolchain build_info.h make_subdirs_rom package_prebuilt_rom_objs rom_linker 
 rom_ns: build_target_folder copy_ld_rom_ns check_toolchain build_info.h make_subdirs_rom_ns package_prebuilt_rom_objs rom_linker_ns 
