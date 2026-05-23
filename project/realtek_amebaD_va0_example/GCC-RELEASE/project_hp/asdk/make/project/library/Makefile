@@ -3,7 +3,10 @@ include $(MAKE_INCLUDE_GEN)
 
 .PHONY: all clean lib clean_lib
 
-CUSTOM_SRC_DIR := $(BASEDIR)/../../src
+# Point CMake at the project ROOT (which has the top-level CMakeLists.txt
+# adding src/ and thirdparty/), not at src/. Root build owns the
+# enumeration of thirdparty submodules via thirdparty/CMakeLists.txt.
+CUSTOM_SRC_DIR := $(BASEDIR)/../..
 USER_BUILD_DIR := $(BASEDIR)/../../build/amebad_user
 USER_CACHE     := $(USER_BUILD_DIR)/init-cache.cmake
 
