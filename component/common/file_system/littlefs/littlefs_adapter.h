@@ -5,38 +5,38 @@
 
 #ifndef CONFIG_USE_FLASHCFG
 #define LFS_FLASH_BASE_ADDR 0x300000
-#define LFS_DEVICE_SIZE 0x0FA000
+#define LFS_DEVICE_SIZE 0x100000
 #endif
 
 extern struct lfs_config g_lfs_cfg;
 extern lfs_t g_lfs;
 
 /**
- * lfsÓëµ×²ãflash¶ÁÊý¾Ý½Ó¿Ú
+ * lfsï¿½ï¿½×²ï¿½flashï¿½ï¿½ï¿½ï¿½ï¿½Ý½Ó¿ï¿½
  * @param  c
- * @param  block  ¿é±àºÅ
- * @param  off    ¿éÄÚÆ«ÒÆµØÖ·
- * @param  buffer ÓÃÓÚ´æ´¢¶ÁÈ¡µ½µÄÊý¾Ý
- * @param  size   Òª¶ÁÈ¡µÄ×Ö½ÚÊý
+ * @param  block  ï¿½ï¿½ï¿½ï¿½
+ * @param  off    ï¿½ï¿½ï¿½ï¿½Æ«ï¿½Æµï¿½Ö·
+ * @param  buffer ï¿½ï¿½ï¿½Ú´æ´¢ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * @param  size   Òªï¿½ï¿½È¡ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½
  * @return
  */
 int lfs_diskio_read(const struct lfs_config *c, lfs_block_t block, lfs_off_t off, void *buffer, lfs_size_t size);
 
 /**
- * lfsÓëµ×²ãflashÐ´Êý¾Ý½Ó¿Ú
+ * lfsï¿½ï¿½×²ï¿½flashÐ´ï¿½ï¿½ï¿½Ý½Ó¿ï¿½
  * @param  c
- * @param  block  ¿é±àºÅ
- * @param  off    ¿éÄÚÆ«ÒÆµØÖ·
- * @param  buffer ´ýÐ´ÈëµÄÊý¾Ý
- * @param  size   ´ýÐ´ÈëÊý¾ÝµÄ´óÐ¡
+ * @param  block  ï¿½ï¿½ï¿½ï¿½
+ * @param  off    ï¿½ï¿½ï¿½ï¿½Æ«ï¿½Æµï¿½Ö·
+ * @param  buffer ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * @param  size   ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ÝµÄ´ï¿½Ð¡
  * @return
  */
 int lfs_diskio_prog(const struct lfs_config *c, lfs_block_t block, lfs_off_t off, const void *buffer, lfs_size_t size);
 
 /**
- * lfsÓëµ×²ãflash²Á³ý½Ó¿Ú
+ * lfsï¿½ï¿½×²ï¿½flashï¿½ï¿½ï¿½ï¿½ï¿½Ó¿ï¿½
  * @param  c
- * @param  block ¿é±àºÅ
+ * @param  block ï¿½ï¿½ï¿½ï¿½
  * @return
  */
 int lfs_diskio_erase(const struct lfs_config *c, lfs_block_t block);
